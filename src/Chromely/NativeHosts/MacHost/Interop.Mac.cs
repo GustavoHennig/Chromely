@@ -1,7 +1,7 @@
 ﻿// Copyright © 2017 Chromely Projects. All rights reserved.
 // Use of this source code is governed by MIT license that can be found in the LICENSE file.
 
-namespace Chromely.NativeHosts;
+namespace Chromely.NativeHosts.MacHost;
 
 internal class InteropMac
 {
@@ -39,4 +39,10 @@ internal class InteropMac
 
     [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
     internal static extern void quit(IntPtr application, IntPtr pool);
+
+    [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern void minimize(IntPtr view);
+
+    [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern void maximize(IntPtr view);
 }

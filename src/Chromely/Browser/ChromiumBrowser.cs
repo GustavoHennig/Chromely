@@ -203,10 +203,12 @@ public abstract partial class ChromiumBrowser
     /// </param>
     public void OnBrowserAfterCreated(CefBrowser browser)
     {
-        Browser = browser;
-
-        // Register JavaScriptExecutor
-        _config.JavaScriptExecutor = new DefaultJavaScriptExecutor(browser);
+        // Consider first created browser window as an application window
+        if (Browser == null)
+        {
+            Browser = browser;
+            _config.JavaScriptExecutor = new DefaultJavaScriptExecutor(browser);
+        }
 
         Created?.Invoke(this, EventArgs.Empty);
     }

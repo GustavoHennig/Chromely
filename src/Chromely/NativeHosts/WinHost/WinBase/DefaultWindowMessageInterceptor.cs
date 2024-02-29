@@ -1,7 +1,7 @@
 ﻿// Copyright © 2017 Chromely Projects. All rights reserved.
 // Use of this source code is governed by MIT license that can be found in the LICENSE file.
 
-namespace Chromely.NativeHosts;
+namespace Chromely.NativeHosts.WinHost.WinBase;
 
 /// <summary>
 /// Default implementation of <see cref="IWindowMessageInterceptor"/>.
@@ -119,6 +119,7 @@ public class DefaultWindowMessageInterceptor : IWindowMessageInterceptor
         private readonly IntPtr _wndProcPtr;
         private readonly FramelessOption _framelessOption;
         private bool _hasCapture;
+        private bool _didReleaseCaptureAtStartingPoint;
         private POINT _dragPoint;
 
         /// <summary>
@@ -155,6 +156,12 @@ public class DefaultWindowMessageInterceptor : IWindowMessageInterceptor
             {
                 case WM.LBUTTONDOWN:
                     {
+                        if (_didReleaseCaptureAtStartingPoint)
+                        {
+                            _didReleaseCaptureAtStartingPoint = false;
+                            break;
+                        }
+
                         if (!isDraggableArea)
                         {
                             break;
@@ -204,6 +211,16 @@ public class DefaultWindowMessageInterceptor : IWindowMessageInterceptor
                         if (_hasCapture)
                         {
                             ReleaseCapture();
+
+                            GetCursorPos(out var releasePoint);
+                            ScreenToClient(_nativeHost.Handle, ref releasePoint);
+
+                            _didReleaseCaptureAtStartingPoint = releasePoint.X == _dragPoint.x && releasePoint.Y == _dragPoint.y;
+                            if (_didReleaseCaptureAtStartingPoint)
+                            {
+                                User32.PostMessageW(hWnd, WM.LBUTTONDOWN, wParam, lParam);
+                                User32.PostMessageW(hWnd, WM.LBUTTONUP, wParam, lParam);
+                            }
                         }
                         break;
                     }
