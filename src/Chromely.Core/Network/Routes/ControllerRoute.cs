@@ -94,7 +94,7 @@ public class ControllerRoute
                                 };
                             }
 
-                            chromelyResponse.Status     = (int)HttpStatusCode.OK;
+                            chromelyResponse.Status = (int)HttpStatusCode.OK;
                             chromelyResponse.StatusText = ResourceConstants.StatusOKText;
                             break;
                         }
@@ -113,7 +113,7 @@ public class ControllerRoute
                                 builder.AppendLine($"  - {task.Exception.Message}");
                                 Logger.Instance.Log.LogError(task.Exception);
                             }
-                            chromelyResponse.Data       = builder.ToString();
+                            chromelyResponse.Data = builder.ToString();
                             chromelyResponse.StatusText = statusText;
                             break;
                         }
@@ -131,8 +131,8 @@ public class ControllerRoute
 
         // Set request id if available in request and not yet set in response
         var chromelyRequest = content as IChromelyRequest;
-        if (chromelyRequest is not null && 
-            !string.IsNullOrEmpty(chromelyRequest.Id) && 
+        if (chromelyRequest is not null &&
+            !string.IsNullOrEmpty(chromelyRequest.Id) &&
             string.IsNullOrEmpty(chromelyResponse.RequestId))
         {
             chromelyResponse.RequestId = chromelyRequest.Id;
@@ -169,13 +169,20 @@ public class ControllerRoute
                 _routeArguments[argument.Index] = queryArg.Value;
             }
         }
+        if (nameof(IChromelyRequest).Equals(RouteArguments?.FirstOrDefault()?.Type.Name))
+        {
+            if (_routeArguments[0] == null)
+            {
+                _routeArguments[0] = request;
+            }
+        }
     }
 
     private void ParsePostData(object postData)
     {
         var json = _dataTransfers.ConvertRequestToJson(postData);
 
-        if (json is not null)
+        if (!string.IsNullOrEmpty(json))
         {
             var jsonDocumentOptions = _dataTransfers.SerializerOptions.DocumentOptions();
             using JsonDocument jsonDocument = JsonDocument.Parse(json, jsonDocumentOptions);

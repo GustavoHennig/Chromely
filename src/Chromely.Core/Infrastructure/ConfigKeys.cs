@@ -65,7 +65,6 @@ public static class CefSettingKeys
     public const string WINDOWLESSRENDERINGENABLED = nameof(WINDOWLESSRENDERINGENABLED);
     public const string COMMANDLINEARGSDISABLED = nameof(COMMANDLINEARGSDISABLED);
     public const string CACHEPATH = nameof(CACHEPATH);
-    public const string USERDATAPATH = nameof(USERDATAPATH);
     public const string PERSISTSESSIONCOOKIES = nameof(PERSISTSESSIONCOOKIES);
     public const string PERSISTUSERPREFERENCES = nameof(PERSISTUSERPREFERENCES);
     public const string USERAGENT = nameof(USERAGENT);

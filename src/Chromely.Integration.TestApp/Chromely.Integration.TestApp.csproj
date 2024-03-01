@@ -42,8 +42,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Chromely.Core\Chromely.Core.csproj" />
-      <ProjectReference Include="..\Chromely\Chromely.csproj" />
+      <ProjectReference Include="..\Chromely.Core\GHSoftware.Chromely.Core.csproj" />
+      <ProjectReference Include="..\Chromely\GHSoftware.Chromely.csproj" />
     </ItemGroup>
 
 </Project>

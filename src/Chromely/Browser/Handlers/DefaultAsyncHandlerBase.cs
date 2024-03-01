@@ -254,7 +254,7 @@ public abstract class DefaultAsyncHandlerBase : CefResourceHandler, IDisposable
     }
 
     /// <inheritdoc/>
-    protected override bool Read(IntPtr dataOut, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
+    protected override bool Read(Stream response, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
     {
         bytesRead = -1;
         return false;

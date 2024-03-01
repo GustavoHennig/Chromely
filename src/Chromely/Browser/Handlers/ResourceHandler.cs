@@ -2,6 +2,10 @@
 // https://github.com/cefsharp/CefSharp/blob/master/CefSharp/ResourceHandler.cs
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+using System.Data;
+using System;
+using static Xilium.CefGlue.Wrapper.CefMessageRouterBrowserSide;
+
 namespace Chromely.Browser;
 
 /// <summary>
@@ -241,7 +245,7 @@ public class ResourceHandler : CefResourceHandler
     }
 
     /// <inheritdoc/>
-    protected override bool Read(IntPtr dataOut, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
+    protected override bool Read(Stream response, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
     {
         bytesRead = 0;
 
@@ -269,16 +273,11 @@ public class ResourceHandler : CefResourceHandler
             return false;
         }
 
-        using (var safeBuffer = new CefSafeBuffer(dataOut, (ulong)bytesRead))
-        using (var dataOutStream = new UnmanagedMemoryStream(safeBuffer, 0, bytesRead, FileAccess.Write))
-        {
-            //We need to use bytesRead instead of tempbuffer.Length otherwise
-            //garbage from the previous copy would be written to dataOut
-            dataOutStream.Write(tempBuffer, 0, bytesRead);
-        }
+        response.Write(tempBuffer, 0, bytesRead);
 
         return bytesRead > 0;
     }
+
 
     /// <inheritdoc/>
     protected override void Cancel()

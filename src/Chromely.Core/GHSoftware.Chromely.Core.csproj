@@ -6,6 +6,11 @@
 	<Nullable>enable</Nullable>
     <Platforms>AnyCPU</Platforms>
 	<LangVersion>latest</LangVersion>
+	<PackageOutputPath>P:\Dev\MyNuget</PackageOutputPath>
+	<PackageId>$(AssemblyName)</PackageId>
+	<Product>GHSoftware Chromely Core</Product>
+    <Description>It is the base/core library required to build Chromely CefGlue/CefSharp apps on Windows, Linux and MacOS.</Description>
+    <PackageIcon>chromely.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

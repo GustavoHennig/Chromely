@@ -13,14 +13,17 @@ public static class DataTransferExtensions
             {
                 return false;
             }
-
+            
             var tempData = value.ToString();
             if (tempData is null)
             {
                 return false;
             }
 
-            return  JsonDocument.Parse(tempData) is not null;
+            if (tempData.Contains("{") && tempData.Contains("}"))
+            {
+                return JsonDocument.Parse(tempData) is not null;
+            }
         }
         catch { }
 

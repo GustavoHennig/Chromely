@@ -77,10 +77,6 @@ internal static class CefSettingsExtension
                     cefSettings.CachePath = setting.Value;
                     break;
 
-                case CefSettingKeys.USERDATAPATH:
-                    cefSettings.UserDataPath = setting.Value;
-                    break;
-
                 case CefSettingKeys.PERSISTSESSIONCOOKIES:
                     if (setting.Value.TryParseBoolean(out boolResult))
                     {
