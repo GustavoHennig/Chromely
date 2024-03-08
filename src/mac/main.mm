@@ -44,7 +44,10 @@ int main(int argc, char * argv[]) {
     //temp.nominbutton = 1;
     //temp.nomaxbutton = 1;
 
-    memcpy(temp.title, "chromely", 8);
+	// Allocate memory for the window title
+    const char* windowTitle = "chromely";
+    temp.titleUtf8Ptr = new char[strlen(windowTitle) + 1];
+    strcpy(temp.titleUtf8Ptr, windowTitle);
 
     temp.x = 0;
     temp.y = 0;

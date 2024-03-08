@@ -1,5 +1,28 @@
 /*
 * chromely_mac.m
+*
+* This is a Claude generated description:
+This file, `chromely_mac.m`, is an Objective-C implementation for creating and managing a window on macOS using the Chromium Embedded Framework (CEF). It provides the necessary functionality for handling events, creating the application window, and managing its lifecycle.
+
+The file consists of several classes and functions:
+
+1. `NSApplication+ChromelyApplication`: This category extends the `NSApplication` class to provide a custom implementation for handling events. It swizzles (exchanges) the implementation of the `sendEvent:` and `terminate:` methods to handle events and termination in a specific way.
+
+2. `RootWindowDelegate`: This class is responsible for handling window-related events, such as window closing, minimization, and application hide/unhide events. It also manages the cleanup process when the window is closed.
+
+3. `ChromelyAppDelegate`: This class is the application delegate that manages the creation of the main window, sets up the window's appearance and behavior (e.g., frameless, fullscreen, resizable), and handles window resizing and moving events.
+
+4. `createwindow`: This function is the entry point for creating the application window. It initializes the `ChromelyApplication` instance, creates the `ChromelyAppDelegate`, and runs the CEF message loop.
+
+5. `createwindowdata`: This function creates the `ChromelyAppDelegate` and returns an `APPDATA` struct containing the `NSApplication` instance and an `NSAutoreleasePool`.
+
+6. `run`: This function runs the `NSApplication` event loop.
+
+7. `quit`: This function releases the `NSAutoreleasePool` and terminates the `NSApplication`.
+
+8. `minimize` and `maximize`: These functions minimize and maximize the window, respectively, by sending the appropriate messages to the window's `NSWindow` instance.
+
+The file also includes various helper functions and callbacks to interact with the CEF framework and handle events related to the application window's lifecycle.
 */
 
 // include the Cocoa Frameworks
@@ -84,6 +107,16 @@ namespace {
            selector:@selector(applicationDidUnhide:)
                name:NSApplicationDidUnhideNotification
              object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(windowDidMiniaturize:)
+               name:NSWindowDidMiniaturizeNotification
+             object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(windowWillClose:)
+               name:NSWindowWillCloseNotification
+             object:nil];
   }
   return self;
 }
@@ -136,7 +169,7 @@ namespace {
 // to be removed from the screen.
 - (BOOL)windowShouldClose:(NSWindow*)window {
   if (!force_close_) {
-        /// CHROMELYPARAM- function pointer?
+  /// CHROMELYPARAM- function pointer?
     }
 
   // Don't want any more delegate callbacks after we destroy ourselves.
@@ -153,6 +186,11 @@ namespace {
 
   // Allow the close.
   return YES;
+}
+
+- (void)windowWillClose:(NSNotification*)notification {
+  NSLog(@"windowWillClose called");	
+	chromelyParam_.exitCallback();
 }
 
 // Deletes itself.
