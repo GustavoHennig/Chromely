@@ -1,6 +1,8 @@
 ﻿// Copyright © 2017 Chromely Projects. All rights reserved.
 // Use of this source code is governed by MIT license that can be found in the LICENSE file.
 
+using System.Threading;
+
 namespace Chromely;
 
 /// <summary>
@@ -16,6 +18,22 @@ internal sealed class ActionTask : CefTask
     internal static void PostTask(CefThreadId threadId, Action action)
     {
         CefRuntime.PostTask(threadId, new ActionTask(action));
+    }
+
+    /// <summary>
+    /// Run a function on UI thread.
+    /// </summary>
+    /// <param name="action"></param>
+    internal static void PostTaskUI(Action action)
+    {
+        if (!CefRuntime.CurrentlyOn(CefThreadId.UI))
+        {
+            CefRuntime.PostTask(CefThreadId.UI, new ActionTask(action));
+        }
+        else
+        {
+            action.Invoke();
+        }
     }
 
     /// <summary>

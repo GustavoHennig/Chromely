@@ -1,7 +1,7 @@
 ﻿<Project>
 
 	<PropertyGroup>
-		<Version>118.0.1</Version>
+		<Version>120.2.7.3</Version>
 
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>

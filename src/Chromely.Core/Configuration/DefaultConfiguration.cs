@@ -38,7 +38,7 @@ public class DefaultConfiguration : IChromelyConfiguration
 
         CustomSettings = new Dictionary<string, string>()
         {
-            ["cefLogFile"] = "logs\\chromely.cef.log",
+            ["cefLogFile"] =  Path.Combine("logs","chromely.cef.log"),
             ["logSeverity"] = "info",
             ["locale"] = "en-US"
         };

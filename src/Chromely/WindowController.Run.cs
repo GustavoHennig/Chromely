@@ -63,13 +63,11 @@ public partial class WindowController
 
         CefBinariesLoader.Load(_binariesDownloader, _config);
 
-        CefRuntime.EnableHighDpiSupport();
-
         _settings = new CefSettings
         {
             MultiThreadedMessageLoop = (_config.Platform == ChromelyPlatform.Windows && !_config.WindowOptions.UseOnlyCefMessageLoop),
             LogSeverity = CefLogSeverity.Info,
-            LogFile = "logs\\chromely.cef_" + DateTime.Now.ToString("yyyyMMdd") + ".log",
+            LogFile = Path.Combine("logs","chromely.cef_" + DateTime.Now.ToString("yyyyMMdd") + ".log"),
             ResourcesDirPath = _config.AppExeLocation
         };
 
