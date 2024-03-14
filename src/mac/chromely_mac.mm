@@ -168,6 +168,7 @@ namespace {
 // sequence by getting rid of the window. By returning YES, we allow the window
 // to be removed from the screen.
 - (BOOL)windowShouldClose:(NSWindow*)window {
+  NSLog(@"windowShouldClose called");	
   if (!force_close_) {
   /// CHROMELYPARAM- function pointer?
     }
@@ -190,7 +191,14 @@ namespace {
 
 - (void)windowWillClose:(NSNotification*)notification {
   NSLog(@"windowWillClose called");	
-	chromelyParam_.exitCallback();
+
+  NSWindow *closingWindow = [notification object];
+
+  if (closingWindow.mainWindow == YES) {
+    NSLog(@"windowWillClose called for mainWindow");
+    [self cleanup];
+    // chromelyParam_.exitCallback();
+  }
 }
 
 // Deletes itself.

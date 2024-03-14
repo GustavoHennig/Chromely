@@ -62,7 +62,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="GHSoftware.CefGlue" Version="118.1.2" />
+		
+		<PackageReference Include="GHSoftware.CefGlue" Version="120.2.7" />
+		
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
