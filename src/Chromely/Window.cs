@@ -88,4 +88,9 @@ public partial class Window : ChromiumBrowser, IChromelyWindow
     {
         NativeHost?.Shutdown();
     }
+
+    public virtual string ShowSelectFolderDialog()
+    {
+        return NativeHost?.ShowSelectFolderDialog();
+    }
 }

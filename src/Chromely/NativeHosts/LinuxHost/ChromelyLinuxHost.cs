@@ -650,4 +650,10 @@ public partial class ChromelyLinuxHost : IChromelyNativeHost
     protected virtual void FreeData()
     {
     }
+
+    public string ShowSelectFolderDialog()
+    {
+        Logger.Instance.Log.LogError("NotImplemented LinuxGtk3Host::ShowSelectFolderDialog");
+        return null;
+    }
 }

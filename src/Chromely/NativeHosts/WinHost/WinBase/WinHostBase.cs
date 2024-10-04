@@ -725,6 +725,26 @@ public abstract partial class WinHostBase : IChromelyNativeHost
         catch { }
     }
 
+    public string ShowSelectFolderDialog()
+    {
+        var dialog = (IFileOpenDialog)new FileOpenDialog();
+        dialog.SetOptions(FOS.FOS_PICKFOLDERS | FOS.FOS_FORCEFILESYSTEM);
+
+        // Show the folder picker dialog
+        if (dialog.Show(IntPtr.Zero) == 0) // S_OK
+        {
+            // Get the selected item
+            dialog.GetResult(out IShellItem item);
+            item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out IntPtr pszFilePath);
+
+            string folderPath = Marshal.PtrToStringAuto(pszFilePath);
+            Marshal.FreeCoTaskMem(pszFilePath);
+
+            return folderPath;
+        }
+        return null;
+    }
+
     protected static readonly HT[] BorderHitTestResults =
     {
             HT.TOP,

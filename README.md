@@ -3,6 +3,16 @@
 
 <br />
 
+
+## Fixed in this fork
+
+- The application was not closing properly on macOS.
+- The application was closing after showing a context menu on macOS.
+- Added `ShowSelectFolderDialog` method to the Chromely window (Windows and macOS).
+
+
+## Original read me
+
 For developers who are interested in [WebView2](https://docs.microsoft.com/en-us/microsoft-edge/webview2/) there is [EdgeSharp](https://github.com/edgesharp/EdgeSharp), an offshoot of Chromely.
 
 Chromely is a lightweight alternative to <a href="https://github.com/ElectronNET/Electron.NET">Electron.NET</a>, <a href="https://github.com/electron/electron">Electron</a> for .NET/.NET Core developers.

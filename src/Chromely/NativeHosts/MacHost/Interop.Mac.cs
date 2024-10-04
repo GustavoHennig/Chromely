@@ -45,4 +45,11 @@ internal class InteropMac
 
     [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
     internal static extern void maximize(IntPtr view);
+
+    [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern IntPtr showselectfolderwindow(IntPtr parentWindow);
+
+    [DllImport(ChromelyMacLib, CallingConvention = CallingConvention.Cdecl)]
+    internal static extern void freestring(IntPtr str);
+
 }

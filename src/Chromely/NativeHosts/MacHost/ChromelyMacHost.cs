@@ -337,4 +337,28 @@ public partial class ChromelyMacHost : IChromelyNativeHost
 
         return IntPtr.Zero;
     }
+
+    public string ShowSelectFolderDialog()
+    {
+        try
+        {
+            IntPtr folderPathPtr = showselectfolderwindow(_windowHandle);
+
+            if (folderPathPtr != IntPtr.Zero)
+            {
+                string folderPath = Marshal.PtrToStringAnsi(folderPathPtr);
+
+                // Free the unmanaged string if necessary
+                freestring(folderPathPtr);
+                return folderPath;
+            }
+        }
+        catch (Exception exception)
+        {
+            Logger.Instance.Log.LogError("Error in ChromelyMacHost::ShowSelectFolderDialog");
+            Logger.Instance.Log.LogError(exception, exception.Message);
+        }
+
+        return null;
+    }
 }

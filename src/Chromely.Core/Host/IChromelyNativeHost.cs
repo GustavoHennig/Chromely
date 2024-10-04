@@ -120,4 +120,10 @@ public interface IChromelyNativeHost : IDisposable
     /// </summary>
     /// <param name="hWnd">The window host handle.</param>
     void ToggleFullscreen(IntPtr hWnd);
+
+    /// <summary>
+    /// Shows the select folder dialog.
+    /// </summary>
+    /// <returns></returns>
+    string ShowSelectFolderDialog();
 }
