@@ -63,6 +63,8 @@ _DLL_EXPORT void run(void* application);
 _DLL_EXPORT void quit(void* application, void* pool);
 _DLL_EXPORT void minimize(void* view);
 _DLL_EXPORT void maximize(void* view);
+_DLL_EXPORT const char* showselectfolderwindow(void* parentWindow);
+_DLL_EXPORT void freestring(const char* str);
 
 #ifdef __cplusplus
 }

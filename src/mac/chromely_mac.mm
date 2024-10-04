@@ -116,7 +116,7 @@ namespace {
         addObserver:self
            selector:@selector(windowWillClose:)
                name:NSWindowWillCloseNotification
-             object:nil];
+             object:window_];           
   }
   return self;
 }
@@ -462,3 +462,51 @@ void minimize(void* view) {
 void maximize(void* view) {
   [[CAST_CEF_WINDOW_HANDLE_TO_NSVIEW(view) window] performZoom:nil];
 }
+
+// Function to show a folder selection dialog and return the selected folder path
+const char* showselectfolderwindow(void* parentWindow) {
+    __block const char* resultString = NULL;
+
+    // Create a semaphore to wait for the sheet to close
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+
+    // Ensure execution on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @autoreleasepool {
+            NSWindow* window = (__bridge NSWindow*)parentWindow;
+
+            NSOpenPanel* panel = [NSOpenPanel openPanel];
+
+            [panel setCanChooseFiles:NO];
+            [panel setCanChooseDirectories:YES];
+            [panel setAllowsMultipleSelection:NO];
+
+            [panel beginSheetModalForWindow:window completionHandler:^(NSModalResponse result) {
+                if (result == NSModalResponseOK) {
+                    NSURL* folderURL = [[panel URLs] objectAtIndex:0];
+                    NSString* folderPath = [folderURL path];
+
+                    const char* cString = [folderPath UTF8String];
+                    // Duplicate the string to ensure it remains valid after the function returns
+                    resultString = strdup(cString);
+                }
+                // Signal that the sheet has been dismissed
+                dispatch_semaphore_signal(sema);
+            }];
+        }
+    });
+
+    // Wait until the sheet is dismissed
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+
+    return resultString;
+}
+
+// Function to free the allocated string
+void freestring(const char* str) {
+    if (str != NULL) {
+        free((void*)str);
+    }
+}
+
+
