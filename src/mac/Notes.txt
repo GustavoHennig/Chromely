@@ -2,6 +2,11 @@ Building and Testing libchromely.dylib
 -------------------------------------------------
 g++ -dynamiclib -finput-charset=UTF-8 -framework Cocoa -x objective-c++ -current_version 1.0 -I./ -o libchromely.dylib chromely_mac.mm
 
+# For x64 and arm64
+g++ -dynamiclib -finput-charset=UTF-8 -framework Cocoa -x objective-c++ \
+    -current_version 1.0 -I./ \
+    -arch x86_64 -arch arm64 \
+    -o libchromely.dylib chromely_mac.mm
 Check build:
 file  libchromely.dylib
 
